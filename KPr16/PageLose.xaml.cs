@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace KPr16
 {
     /// <summary>
-    /// Логика взаимодействия для PageStart.xaml
+    /// Логика взаимодействия для PageLose.xaml
     /// </summary>
-    public partial class PageStart : Page
+    public partial class PageLose : Page
     {
-        public PageStart()
+        public PageLose()
         {
             InitializeComponent();
         }

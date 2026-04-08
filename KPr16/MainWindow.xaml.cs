@@ -20,11 +20,15 @@ namespace KPr16
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static MainWindow instance;
+        private static MainWindow instance;
         public MainWindow()
         {
             InitializeComponent();
             instance = this;
+        }
+        public static void new_game()
+        {
+            instance.the_frame.Navigate(new PageGame());
         }
     }
 }

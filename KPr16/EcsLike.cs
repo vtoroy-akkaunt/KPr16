@@ -4,16 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace KPr16
 {
     public class EntityNamed
     {
-        public string name { get; set; }
+        public string name { get; protected set; }
+        public ImageSource image { get; set; } // maybe null
+        public virtual string description { get { return name; } }
+        public virtual void proccess_event(ref Event e) {}
+        public virtual List<Type> castable() { return new List<Type>(); }
     }
     public class EntityLiving: EntityNamed
     {
         public int hp { get; set; }
+        public override string description
+        {
+            get
+            {
+                return base.description + ": " + Convert.ToString(hp) + " хэпэ";
+            }
+        }
     }
     public class Event
     {

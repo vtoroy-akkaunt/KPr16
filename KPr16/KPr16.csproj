@@ -73,6 +73,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PageLose.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PageStart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -81,6 +85,9 @@
   <ItemGroup>
     <Compile Include="PageGame.xaml.cs">
       <DependentUpon>PageGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageLose.xaml.cs">
+      <DependentUpon>PageLose.xaml</DependentUpon>
     </Compile>
     <Compile Include="PageStart.xaml.cs">
       <DependentUpon>PageStart.xaml</DependentUpon>

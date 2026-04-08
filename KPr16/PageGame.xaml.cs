@@ -20,9 +20,18 @@ namespace KPr16
     /// </summary>
     public partial class PageGame : Page
     {
+        Game game;
         public PageGame()
         {
             InitializeComponent();
+        }
+        private void redraw()
+        {
+            c_front.ItemsSource = game.front.Union(game.player).ToList();
+        }
+        private void c_front_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
