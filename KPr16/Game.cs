@@ -8,16 +8,17 @@ using KPr16;
 
 namespace KPr16
 {
-    public class EventItemUse: Event {}
+    public class EventItemUse : Event { }
     public class EventHealing : Event {
         public int hp;
     }
-    public class ItemHealing: EntityNamed
+    public class ItemCHealing : EntityNamed
     {
-        public int hp = 50;
-        public ItemHealing() : base() {
+        private int hp = 50;
+        public ItemCHealing() {
             base.name = "Аптэчка";
         }
+        public override string description => "Восстанавливает " + Convert.ToString(hp) + " HP";
         public override void proccess_event(ref Event e)
         {
             if (e is EventHealing ee)
@@ -25,16 +26,45 @@ namespace KPr16
                 ee.hp = hp;
             }
         }
+        public override bool usable => true;
     }
-    public class
+    public class EventDamage : Event
+    {
+        public int hp;
+    }
+    public class ItemCWeapon : EntityNamed
+    {
+        private int hp = 66;
+        public ItemCWeapon()
+        {
+            base.name = "Меч им. Альшаковой";
+        }
+        public override string description => $"Наносит {hp} урона";
+        public override bool usable => true;
+        public override void proccess_event(ref Event e)
+        {
+            if (e is EventDamage ee)
+            {
+                ee.hp = hp;
+            }
+        }
+    }
+    private EntityNamed random_weapon() {
+        return new ItemCWeapon();
+    }
     public class Entity: EntityLiving
     {
-        EntityNamed weapon;
-        EntityNamed armor; // maybe null
+        public EntityNamed weapon;
+        public EntityNamed armor; // maybe null
     }
     public class EnemyGoblin: Entity
     {
-
+        public EnemyGoblin()
+        {
+            base.name = "Гоблин";
+            base.hp = 88;
+            base.weapon = 
+        }
     }
     
     internal class Game

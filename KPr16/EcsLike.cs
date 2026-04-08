@@ -14,7 +14,7 @@ namespace KPr16
         public ImageSource image { get; set; } // maybe null
         public virtual string description { get { return name; } }
         public virtual void proccess_event(ref Event e) {}
-        public virtual List<Type> castable() { return new List<Type>(); }
+        public virtual bool usable { get { return false; } }
     }
     public class EntityLiving: EntityNamed
     {
@@ -23,7 +23,7 @@ namespace KPr16
         {
             get
             {
-                return base.description + ": " + Convert.ToString(hp) + " хэпэ";
+                return Convert.ToString(hp) + " хэпэ";
             }
         }
     }
