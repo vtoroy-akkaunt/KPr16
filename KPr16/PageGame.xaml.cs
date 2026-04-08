@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace KPr16
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для PageGame.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PageGame : Page
     {
-        public static MainWindow instance;
-        public MainWindow()
+        public PageGame()
         {
             InitializeComponent();
-            instance = this;
         }
     }
 }

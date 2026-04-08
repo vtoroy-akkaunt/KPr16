@@ -16,15 +16,17 @@ using System.Windows.Shapes;
 namespace KPr16
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для PageStart.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PageStart : Page
     {
-        public static MainWindow instance;
-        public MainWindow()
+        public PageStart()
         {
             InitializeComponent();
-            instance = this;
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.instance.the_frame.Navigate(new PageGame());
         }
     }
 }
