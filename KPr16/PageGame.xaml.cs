@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,11 +27,17 @@ namespace KPr16
         }
         private void redraw()
         {
-            c_front.ItemsSource = game.front.Union(game.player).ToList();
+            c_front.ItemsSource = game.front.Union(new List<EntityNamed> { game.player }).ToList();
         }
-        private void c_front_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
 
+        private void c_items_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+            if (c_items.SelectedItem != null) {
+                var item = (c_items.SelectedItem as EntityNamed);
+                var ee = new EventItemUse();
+                ee.src = game.player;
+                ee.dst = null;
+                game.player.item_use_helper(item, ee);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Page x:Class="KPr16.PageGame"
+<Page x:Class="KPr16.PageGame"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -22,6 +22,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <DataGrid x:Name="c_items" SelectionMode="Single" IsReadOnly="True" MouseDoubleClick="c_items_MouseDoubleClick"></DataGrid>
         <TextBlock x:Name="event_log" TextWrapping="Wrap"></TextBlock>
     </StackPanel>
 </Page>
