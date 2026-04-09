@@ -20,18 +20,27 @@ namespace KPr16
     /// </summary>
     public partial class PageGame : Page
     {
-        Game game = new();
+        Game game;
         public PageGame()
         {
+            game = new Game();
             InitializeComponent();
+            game.process_player_action(Game.PlayerAction.Skip, null);
             redraw();
         }
         private void redraw()
         {
             c_front.ItemsSource = game.front.Union(new List<EntityNamed> { game.player }).ToList();
+            c_items.ItemsSource = game.player.items;
             var aa = game.available_actions();
             btn_take.IsEnabled = aa.Contains(Game.PlayerAction.Take);
             btn_skip.IsEnabled = aa.Contains(Game.PlayerAction.Skip);
+            event_log.Text = string.Join("\n", Game.event_log);
+            event_log.ScrollToEnd();
+            if (game.player.hp <= 0)
+            {
+                MainWindow.lose();
+            }
         }
 
         private void c_items_MouseDoubleClick(object sender, MouseButtonEventArgs e) {

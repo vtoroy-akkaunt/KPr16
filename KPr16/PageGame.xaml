@@ -15,15 +15,17 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Source="{Binding basepart-image}" 
-                               Width="60" Height="60" 
+                               Width="60" Height="30" 
                                Margin="5"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="c_items" SelectionMode="Single" IsReadOnly="True" MouseDoubleClick="c_items_MouseDoubleClick" Height="150"></DataGrid>
-        <TextBlock x:Name="event_log" TextWrapping="Wrap" Height="50"></TextBlock>
+        <DataGrid x:Name="c_items" SelectionMode="Single" IsReadOnly="True" MouseDoubleClick="c_items_MouseDoubleClick" Height="80"></DataGrid>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Height="150">
+            <TextBox IsReadOnly="True" x:Name="event_log" TextWrapping="Wrap" Width="auto"></TextBox>
+        </ScrollViewer>
         <StackPanel Orientation="Horizontal">
             <Button x:Name="btn_skip" IsEnabled="False" Click="btn_skip_Click">Пропустить</Button>
             <Button x:Name="btn_take" IsEnabled="False" Click="btn_take_Click">Взять</Button>

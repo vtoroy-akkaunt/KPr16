@@ -16,6 +16,8 @@ namespace KPr16
         public virtual void proccess_event(ref Event e) {}
         public virtual bool usable { get { return false; } }
         public virtual bool usable_against { get { return false; } }
+        public virtual bool is_weapon { get { return false; } }
+        public virtual bool is_armor { get { return false; } }
     }
     public class Event
     {

@@ -30,5 +30,9 @@ namespace KPr16
         {
             instance.the_frame.Navigate(new PageGame());
         }
+        public static void lose()
+        {
+            instance.the_frame.Navigate(new PageLose());
+        }
     }
 }
