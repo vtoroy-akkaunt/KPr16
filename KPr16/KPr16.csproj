@@ -65,8 +65,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Enemies.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="EcsLike.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Items.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

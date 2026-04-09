@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KPr16 {
-    public class EventIgnore: Event {}
     public class EntityLiving : EntityNamed {
         public int hp { get; set { if (value < 0) field = 0; else field = value; } }
         public bool is_alive { get { return hp > 0; } }
@@ -58,140 +57,11 @@ namespace KPr16 {
         }
         public virtual void ai() {}
     }
-    public class EventItemUse : Event { }
-    public class EventHealing : Event {
-        public int hp;
-    }
-    public class EventFreeze : Event { }
-    public class ItemCGenericHealing : EntityNamed {
-        private int hp;
-        public ItemCGenericHealing(int hp) {
-            base.name = "Аптэчка";
-            this.hp = hp;
-        }
-        public override string description => "Восстанавливает " + Convert.ToString(hp) + " HP";
-        public override void proccess_event(ref Event e) {
-            if (e is EventItemUse ee) {
-                e = new EventHealing();
-                (e as EventHealing).hp = hp;
-            }
-        }
-        public override bool usable => true;
-    }
-    public class EventDamage : Event {
-        public int hp;
-        public bool ignores_armor = false;
-    }
-    public class ItemCGenericWeapon : EntityNamed {
-        protected int hp;
-        public ItemCGenericWeapon(int hp) {
-            base.name = "Меч";
-            this.hp = hp;
-        }
-        public override string description => $"Наносит {hp} урона";
-        public override bool usable => true;
-        public override bool usable_against => true;
-        public override bool is_weapon => true;
-        public override void proccess_event(ref Event e) {
-            if (e is EventItemUse) {
-                e = new EventDamage();
-                (e as EventDamage).hp = hp;
-            }
-        }
-    }
-    public class ItemCCritWeapon: ItemCGenericWeapon
-    {
-        private double crit_chance;
-        public ItemCCritWeapon(int hp, double crit_chance): base(hp)
-        {
-            this.crit_chance = crit_chance;
-            base.name = "Магический критический меч";
-        }
-        public override void proccess_event(ref Event e)
-        {
-            if (e is EventItemUse)
-            {
-                var ee = new EventDamage { hp = base.hp };
-                if (NW.random.NextDouble() < crit_chance)
-                {
-                    Game.event_log.Add($"{name} критует!");
-                    ee.hp *= 2;
-                }
-                e = ee;
-            }
-        }
-    }
-    public class ItemCIgnoresArmor : ItemCGenericWeapon
-    {
-        private double chance;
-        public ItemCIgnoresArmor(int hp, double chance) : base(hp)
-        {
-            this.chance = chance;
-            base.name = "Игнорирующий меч";
-        }
-        public override void proccess_event(ref Event e)
-        {
-            if (e is EventItemUse)
-            {
-                var ee = new EventDamage { hp = base.hp };
-                if (NW.random.NextDouble() < chance)
-                {
-                    ee.ignores_armor = true;
-                }
-                e = ee;
-            }
-        }
-    }
-    public class EventOnceProtection: Event
-    {
-        public int hp;
-    }
-    public class ItemCGenericShield : EntityNamed
-    {
-        private int hp;
-        public ItemCGenericShield(int hp)
-        {
-            base.name = "Щит";
-            this.hp = hp;
-        }
-        public override string description => $"Защищает от {hp} урона";
-        public override bool usable => true;
-        public override bool is_armor => true;
-        public override void proccess_event(ref Event e)
-        {
-            if (e is EventItemUse)
-            {
-                e = new EventOnceProtection { hp = hp };
-            }
-        }
-    }
     class NW {
         public static Random random = new();
-        public static EntityNamed random_weapon() {
-            return new ItemCGenericWeapon(NW.random.Next(10, 20));
-        }
+        
         public static T choice<T>(List<T> list) {
             return list[NW.random.Next(0, list.Count)];
-        }
-        public static Entity random_enemy(bool is_boss = false) {
-            if (is_boss)
-            {
-                return choice(new List<Entity> { new EntityHasAI() { name = "The враг", hp = NW.random.Next(150, 200) } });
-            }
-            else
-            {
-                return choice(new List<Entity> {
-                    new EnemyCGoblin(),
-                    new EnemyCSkeleton()
-                });
-            }
-        }
-        public static EntityNamed random_item() {
-            return choice(new List<EntityNamed> {
-                new ItemCGenericHealing(NW.random.Next(25, 50)),
-                new ItemCGenericShield (NW.random.Next(10, 50)),
-                random_weapon(),
-            });
         }
         public static EntityLiving /* null */ select_random_enemy_of(List<EntityLiving> enemies) {
             if (!enemies.Where(e => e.is_alive).Any())
@@ -205,7 +75,7 @@ namespace KPr16 {
     }
     public class Entity: EntityLiving
     {
-        public EntityNamed weapon = NW.random_weapon();
+        public EntityNamed weapon = Repo.random_weapon();
         public EntityNamed armor; // maybe null
         public List<EntityLiving> enemies = new(); // Чепуха
         public List<EntityNamed> items { get {
@@ -266,23 +136,6 @@ namespace KPr16 {
             use_item((NW.random.NextDouble() > 0.75 && armor != null ? armor : weapon), ee);
         }
     }
-    public class EnemyCGoblin: EntityHasAI {
-        public EnemyCGoblin()
-        {
-            base.name = "Гоблин";
-            base.hp = 30;
-            base.weapon = new ItemCCritWeapon(NW.random.Next(30, 50), 0.2);
-        }
-    }
-    public class EnemyCSkeleton : EntityHasAI
-    {
-        public EnemyCSkeleton()
-        {
-            base.name = "Скелет";
-            base.hp = 40;
-            base.weapon = new ItemCIgnoresArmor(NW.random.Next(30, 50), 1.0);
-        }
-    }
 
     internal class Game
     {
@@ -338,17 +191,17 @@ namespace KPr16 {
             is_item_now = NW.random.NextDouble() > 0.33;
             if (is_item_now)
             {
-                front.Add(NW.random_item());
+                front.Add(Repo.random_item());
             } else {
                 if (turn_nr % 10 == 0)
                 {
-                    player.enemies.Add(NW.random_enemy(true));
+                    player.enemies.Add(Repo.random_enemy(true));
                 }
                 else
                 {
                     for (int i = 0; i < NW.random.Next(1, 3); i++)
                     {
-                        player.enemies.Add(NW.random_enemy(false));
+                        player.enemies.Add(Repo.random_enemy(false));
                     }
                 }
                 foreach (var enemy in player.enemies)
