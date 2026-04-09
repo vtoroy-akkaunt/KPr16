@@ -29,13 +29,13 @@ namespace KPr16 {
                 }
             }
             else if (e is EventDamage ee) {
+                if (protect_once > 0 && ee.ignores_armor)
+                {
+                    Game.event_log.Add($"{ee.src.name} игнорирует защиту игрока!");
+                    protect_once = 0;
+                }
                 if (protect_once > 0)
                 {
-                    if (ee.ignores_armor)
-                    {
-                        Game.event_log.Add($"{ee.src.name} игнорирует защиту игрока!");
-                        return;
-                    }
                     Game.event_log.Add($"{this.name} поглотил {protect_once} урона!");
                     ee.hp = Math.Max(0, Math.Min(this.hp, ee.hp - protect_once));
                     protect_once = 0;

@@ -48,7 +48,8 @@ namespace KPr16
             {
                 return NW.choice(new List<Entity> {
                     new EnemyCGoblin(),
-                    new EnemyCSkeleton()
+                    new EnemyCSkeleton(),
+                    new EnemyCMage(),
                 });
             }
         }

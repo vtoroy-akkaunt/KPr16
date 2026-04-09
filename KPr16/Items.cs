@@ -19,7 +19,9 @@ namespace KPr16
         {
             if (e is EventItemUse ee)
             {
-                e = new EventHealing();
+                var e2 = new EventHealing();
+                e2.src = e.src;
+                e2.dst = e.dst;
                 (e as EventHealing).hp = hp;
             }
         }
@@ -41,8 +43,11 @@ namespace KPr16
         {
             if (e is EventItemUse)
             {
-                e = new EventDamage();
-                (e as EventDamage).hp = hp;
+                var e2 = new EventDamage();
+                e2.src = e.src;
+                e2.dst = e.dst;
+                (e2 as EventDamage).hp = hp;
+                e = e2;
             }
         }
     }
@@ -58,13 +63,15 @@ namespace KPr16
         {
             if (e is EventItemUse)
             {
-                var ee = new EventDamage { hp = base.hp };
+                var e2 = new EventDamage { hp = base.hp };
+                e2.src = e.src;
+                e2.dst = e.dst;
                 if (NW.random.NextDouble() < crit_chance)
                 {
                     Game.event_log.Add($"{name} критует!");
-                    ee.hp *= 2;
+                    e2.hp *= 2;
                 }
-                e = ee;
+                e = e2;
             }
         }
     }
@@ -80,12 +87,14 @@ namespace KPr16
         {
             if (e is EventItemUse)
             {
-                var ee = new EventDamage { hp = base.hp };
+                var e2 = new EventDamage { hp = base.hp };
+                e2.src = e.src;
+                e2.dst = e.dst;
                 if (NW.random.NextDouble() < chance)
                 {
-                    ee.ignores_armor = true;
+                    e2.ignores_armor = true;
                 }
-                e = ee;
+                e = e2;
             }
         }
     }
@@ -101,12 +110,15 @@ namespace KPr16
         {
             if (e is EventItemUse)
             {
-                e = new EventDamage { hp = base.hp };
+                var e2 = new EventDamage { hp = base.hp };
+                e2.src = e.src;
+                e2.dst = e.dst;
                 if (NW.random.NextDouble() < chance)
                 {
-                    Event e2 = new EventFreeze { src = e.src, dst = e.dst };
-                    e.dst.proccess_event(ref e2);
+                    Event e3 = new EventFreeze { src = e.src, dst = e.dst };
+                    e2.dst.proccess_event(ref e3);
                 }
+                e = e2;
             }
         }
     }
