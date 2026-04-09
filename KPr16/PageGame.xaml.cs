@@ -31,12 +31,11 @@ namespace KPr16
         }
 
         private void c_items_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+            if (!game.available_actions().Contains(Game.PlayerAction.Use))
+                return;
             if (c_items.SelectedItem != null) {
                 var item = (c_items.SelectedItem as EntityNamed);
-                var ee = new EventItemUse();
-                ee.src = game.player;
-                ee.dst = null;
-                game.player.item_use_helper(item, ee);
+                game.process_player_action(Game.PlayerAction.Use, item);
             }
         }
     }
