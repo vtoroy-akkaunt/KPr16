@@ -102,6 +102,9 @@ namespace KPr16 {
         public EntityNamed weapon = NW.random_weapon();
         public EntityNamed armor; // maybe null
         public List<EntityLiving> enemies;
+        public List<EntityNamed> items { get {
+            ...
+        } }
         public void item_use_helper(EntityNamed item, Event ee) {
             if (is_frozen) {
                 Game.event_log.Add($"{name} заморожен и не может воспользоваться {item.name}");
@@ -119,7 +122,7 @@ namespace KPr16 {
             item.proccess_event(ref ee);
             dst .proccess_event(ref ee);
         }
-        public override string description => base.description + $", оружие: {weapon.description}, броня: {armor.description}";
+        public override string description => base.description + $", оружие: {weapon.name}, {weapon.description}, броня: {(armor != null ? armor.name + ", " + armor.description : "-")}";
     }
     public class EntityHasAI : Entity {
         public override void ai() {
@@ -187,6 +190,7 @@ namespace KPr16 {
         {
             turn_nr++;
             front.Clear();
+            is_item_now = new Random().NextDouble() > 0.67;
             if (turn_nr % 10 == 0) {
                 front.Add(NW.random_enemy(true));
             }
@@ -194,7 +198,8 @@ namespace KPr16 {
             {
                 front.Add(NW.random_item());
             } else {
-                front.Add(NW.random_enemy(false));
+                for (int i = 0; i < new Random().Next(1, 3); i++)
+                    front.Add(NW.random_enemy(false));
             }
         }
     }

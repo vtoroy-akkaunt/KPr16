@@ -9,7 +9,7 @@
       Title="PageGame">
 
     <StackPanel Orientation="Vertical">
-        <DataGrid x:Name="c_front" SelectionMode="Single" IsReadOnly="True">
+        <DataGrid x:Name="c_front" SelectionMode="Single" IsReadOnly="True" Height="200">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="image" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
@@ -22,7 +22,11 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="c_items" SelectionMode="Single" IsReadOnly="True" MouseDoubleClick="c_items_MouseDoubleClick"></DataGrid>
-        <TextBlock x:Name="event_log" TextWrapping="Wrap"></TextBlock>
+        <DataGrid x:Name="c_items" SelectionMode="Single" IsReadOnly="True" MouseDoubleClick="c_items_MouseDoubleClick" Height="150"></DataGrid>
+        <TextBlock x:Name="event_log" TextWrapping="Wrap" Height="50"></TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="btn_skip" IsEnabled="False" Click="btn_skip_Click">Пропустить</Button>
+            <Button x:Name="btn_take" IsEnabled="False" Click="btn_take_Click">Взять</Button>
+        </StackPanel>
     </StackPanel>
 </Page>
