@@ -14,7 +14,7 @@
                 <DataGridTemplateColumn Header="image" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding basepart-image}" 
+                            <Image Source="{Binding image}" 
                                Width="60" Height="30" 
                                Margin="5"/>
                         </DataTemplate>

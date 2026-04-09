@@ -22,7 +22,8 @@ namespace KPr16
                 var e2 = new EventHealing();
                 e2.src = e.src;
                 e2.dst = e.dst;
-                (e as EventHealing).hp = hp;
+                (e2 as EventHealing).hp = hp;
+                e = e2;
             }
         }
         public override bool usable => true;

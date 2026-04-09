@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace KPr16
 {
     public class EntityNamed
     {
         public string name { get; set; }
-        public ImageSource image { get; set; } // maybe null
+        public virtual ImageSource image { get; } // maybe null
         public virtual string description { get { return name; } }
         public virtual void proccess_event(ref Event e) {}
         public virtual bool usable { get { return false; } }

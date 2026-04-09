@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace KPr16 {
     public class EntityLiving : EntityNamed {
@@ -23,8 +24,6 @@ namespace KPr16 {
                 if (is_frozen)
                 {
                     Game.event_log.Add($"{name} заморожен и не может воспользоваться предметом");
-                    is_frozen = false;
-                    Game.event_log.Add($"{name} разморожен");
                     e = new EventIgnore();
                 }
             }
@@ -121,6 +120,7 @@ namespace KPr16 {
                 dst = NW.select_random_enemy_of(enemies);
                 Game.event_log[Game.event_log.Count - 1] += $" на {dst.name}";
             }
+            ee.dst = dst;
             this.proccess_event(ref ee);
             item.proccess_event(ref ee);
             dst .proccess_event(ref ee);
@@ -134,6 +134,9 @@ namespace KPr16 {
                 dst = null
             };
             use_item((NW.random.NextDouble() > 0.75 && armor != null ? armor : weapon), ee);
+            if (is_frozen)
+                Game.event_log.Add($"{name} разморожен");
+            is_frozen = false;
         }
     }
 
@@ -184,6 +187,9 @@ namespace KPr16 {
             }
             if (is_item_now || front.Where(e => (e as EntityLiving).is_alive).Count() == 0)
                 next_stage();
+            if (player.is_frozen)
+                Game.event_log.Add($"{player.name} разморожен");
+            player.is_frozen = false;
         }
         private void next_stage()
         {
