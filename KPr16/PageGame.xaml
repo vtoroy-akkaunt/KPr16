@@ -9,7 +9,7 @@
       Title="PageGame">
 
     <StackPanel Orientation="Vertical">
-        <DataGrid x:Name="c_front" SelectionMode="Single" IsReadOnly="True" Height="200">
+        <DataGrid x:Name="c_front" SelectionMode="Single" IsReadOnly="True" Height="200" AutoGeneratingColumn="c_front_AutoGeneratingColumn">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="image" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>

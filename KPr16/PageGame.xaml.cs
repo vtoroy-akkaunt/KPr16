@@ -62,5 +62,11 @@ namespace KPr16
             game.process_player_action(Game.PlayerAction.Take, null);
             redraw();
         }
+
+        private void c_front_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (new List<string> { "image" }.Contains(e.Column.Header as string))
+                e.Cancel = true;
+        }
     }
 }
