@@ -12,7 +12,8 @@ namespace KPr16
         {
             base.name = "Гоблин";
             base.hp = 30;
-            base.weapon = new ItemCCritWeapon(NW.random.Next(30, 50), 0.2);
+            base.weapon = new ItemCCritWeapon(NW.random.Next(10, 15), 0.2);
+            base.armor = new ItemCGenericShield(3);
         }
     }
     public class EnemyCSkeleton : EntityHasAI
@@ -21,7 +22,18 @@ namespace KPr16
         {
             base.name = "Скелет";
             base.hp = 40;
-            base.weapon = new ItemCIgnoresArmor(NW.random.Next(30, 50), 1.0);
+            base.weapon = new ItemCIgnoresArmor(NW.random.Next(15, 25), 1.0);
+            base.armor = new ItemCGenericShield(5);
+        }
+    }
+    public class EnemyCMage : EntityHasAI
+    {
+        public EnemyCMage()
+        {
+            base.name = "Маг";
+            base.hp = 25;
+            base.weapon = new ItemCFreezes(NW.random.Next(20, 30), 0.15);
+            base.armor = new ItemCGenericShield(2);
         }
     }
     partial class Repo

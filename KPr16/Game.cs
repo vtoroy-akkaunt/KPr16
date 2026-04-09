@@ -157,7 +157,10 @@ namespace KPr16 {
             if (is_item_now) {
                 return new List<PlayerAction> { PlayerAction.Take, PlayerAction.Skip };
             } else {
-                return new List<PlayerAction> { PlayerAction.Use, PlayerAction.Skip };
+                if (player.is_frozen)
+                    return new List<PlayerAction> { PlayerAction.Skip };
+                else
+                    return new List<PlayerAction> { PlayerAction.Use, PlayerAction.Skip };
             }
         }
         private void enemies_turn() {

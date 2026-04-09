@@ -89,6 +89,27 @@ namespace KPr16
             }
         }
     }
+    public class ItemCFreezes : ItemCGenericWeapon
+    {
+        private double chance;
+        public ItemCFreezes(int hp, double chance) : base(hp)
+        {
+            this.chance = chance;
+            base.name = "Замораживающий меч";
+        }
+        public override void proccess_event(ref Event e)
+        {
+            if (e is EventItemUse)
+            {
+                e = new EventDamage { hp = base.hp };
+                if (NW.random.NextDouble() < chance)
+                {
+                    Event e2 = new EventFreeze { src = e.src, dst = e.dst };
+                    e.dst.proccess_event(ref e2);
+                }
+            }
+        }
+    }
     public class ItemCGenericShield : EntityNamed
     {
         private int hp;
