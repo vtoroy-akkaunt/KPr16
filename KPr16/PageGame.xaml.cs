@@ -65,7 +65,7 @@ namespace KPr16
 
         private void c_front_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if (new List<string> { "image" }.Contains(e.Column.Header as string))
+            if (new List<string> { "image", "usable" }.Contains(e.Column.Header as string))
                 e.Cancel = true;
         }
     }
